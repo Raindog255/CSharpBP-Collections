@@ -53,5 +53,41 @@ namespace Acme.Biz.Tests
             // Assert
             Assert.AreEqual(expected, actual);
         }
+
+        [TestMethod()]
+        public void RetrieveTest()
+        {
+            // Arrange
+            var repository = new VendorRepository();
+            var expected = new List<Vendor>();
+            expected.Add(new Vendor() { VendorId = 1, CompanyName = "ABC", Email = "abc@abc.com" });
+            expected.Add(new Vendor() { VendorId = 2, CompanyName = "XYZ", Email = "xyz@xyz.com" });
+
+            // Act
+            var actual = repository.Retrieve();
+
+            // Assert
+            CollectionAssert.AreEqual(expected, actual);
+        }
+
+        [TestMethod()]
+        public void RetrieveWithKeysTest()
+        {
+            //Arrange
+            var repository = new VendorRepository();
+            var expected = new Dictionary<string, Vendor>()
+            {
+                {"ABC Corp", new Vendor()
+                    { VendorId = 1, CompanyName = "ABC", Email = "abc@abc.com" }},
+                {"XYZ Inc", new Vendor()
+                    { VendorId = 2, CompanyName = "XYZ", Email = "xyz@xyz.com" }}
+            };
+
+            //Act
+            var actual = repository.RetrieveWithKeys();
+
+            //Assert
+            CollectionAssert.AreEqual(expected, actual);
+        }
     }
-} 
+}
